@@ -42,7 +42,7 @@ Filtering by SYN shows the first two steps of the 3-way handshake: my VM (random
 ## Host info
 `ip -br -4 a` shows the VM on eth0 with IP 10.0.2.15/24, plus the loopback (127.0.0.1).
 
-![ip-a](screenshots/IP_A.png)
+![IP A](screenshots/IP_A.png)
 
 ---
 # Privacy notes
