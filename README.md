@@ -4,4 +4,4 @@ Labs I'm doing while studying Cybersecurity, always in isolated VMs.
 Goal: Junior SOC / Security Analyst.
 
 ## Labs
-- 01 - Wireshark basics (done)
+   - [01 - Wireshark basics](01-wireshark) (done)
