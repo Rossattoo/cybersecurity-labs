@@ -79,3 +79,53 @@ I dropped it to 2 and the second IP got flagged too. A low limit catches more, b
 # What I learned
 
 A log is just text, and with a few lines of Python you can turn it into numbers. I also saw how much the limit decides what gets flagged. This was my first time writing a detection rule, even a tiny one.
+
+---
+
+# Update: fixing a flaw (version 2)
+
+After I understood how the script works, I noticed a flaw in my detection logic. It counts the failures of the whole file, so 5 failed logins spread over a month trigger the same alert as 5 failed logins in one minute. The first is probably someone who forgot their password, the second looks like an automated attack.
+
+I kept `detect.py` as it was and wrote `detect_v2.py`, which counts failures inside a time window: 5 failures in 60 seconds.
+
+## Notes
+
+- `auth_v2.log` is another fake log I generated myself. The IPs are again from ranges reserved for examples, so they don't belong to anyone.
+- The log lines have no year, so I set it in the script (`YEAR = 2026`).
+
+## How to repeat it
+
+Create the second log. Run each command once:
+
+```
+for day in 01 08 15 22 29; do echo "Oct $day 09:00:00 kali sshd[99]: Failed password for invalid user admin from 198.51.100.7 port 55551 ssh2" >> auth_v2.log; done
+for i in 1 2 3 4 5 6; do echo "Oct 10 10:00:0$i kali sshd[99]: Failed password for invalid user root from 203.0.113.50 port 4444$i ssh2" >> auth_v2.log; done
+```
+
+Then run version 2:
+
+```
+python3 detect_v2.py
+cat report_v2.csv
+```
+
+## What I did
+
+### The new log
+Two IPs: one with 5 failures spread over the month, and one with 6 failures in a few seconds.
+
+![log v2](screenshots/06-log-v2.png)
+
+### The new script
+Instead of only counting, it saves the time of every failure and, for each IP, looks for the busiest 60 seconds.
+
+![script v2](screenshots/07-script-v2.png)
+
+### The result
+Version 1 would have flagged both IPs, because both have 5 or more failures in total. Version 2 only flags the one with 6 failures in a few seconds. The one spread over the month stays quiet.
+
+![result v2](screenshots/08-result-v2.png)
+
+## What I learned
+
+Counting is not enough, time matters too. The log already had the timestamps and I wasn't using them. This is still simple: it works for a small fake log, and a real one would need a faster way to count.
