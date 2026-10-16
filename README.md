@@ -7,7 +7,7 @@ Goal: Junior SOC / Security Analyst.
 - [01 - Wireshark basics](01-wireshark) (done)
 - [02 - Brute force detector](02-bruteforce-detector) (done)
 - [03 - Linux firewall with UFW](03-linux-firewall-ufw) (done)
-- 04 - Digital forensics (done)
+- [04 - Digital forensics basics](04-digital-forensics) (done)
 - 05 - Phishing analysi (in progress)
 - 06 - Mini SOC with Wazuh (in progress)
 - 07 - Firewall with OPNsense (in progress)
