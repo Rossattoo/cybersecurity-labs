@@ -96,7 +96,7 @@ Allowed 22, 80 and 443, and denied 21, 23 and 445.
 | Port | What nmap showed | Why |
 |---|---|---|
 | 80 | open | Allowed, and the web server is listening |
-| 22 | [write what you saw: closed / open] | Allowed, but nothing is listening on it |
+| 22 | closed | Allowed, but nothing is listening on it |
 | 443 | closed | Allowed, but nothing is listening on it |
 | 21, 23, 445 | filtered | Blocked, the firewall drops the packets |
 
